@@ -14,6 +14,7 @@ setup(name='git-of-theseus',
           'pygments',
           'matplotlib',
           'scipy',
+          'pandas',
       ],
       entry_points = {
         'console_scripts': [

@@ -15,7 +15,7 @@
 # limitations under the License.
 
 from __future__ import print_function
-import argparse, git, datetime, numpy, pygments.lexers, traceback, time, os, fnmatch, json, progressbar, sys
+import argparse, git, datetime, numpy, pygments.lexers, traceback, time, os, fnmatch, json, progressbar, sys, pandas
 import warnings
 
 # Some filetypes in Pygments are not necessarily computer code, but configuration/documentation. Let's not include those.
@@ -55,7 +55,9 @@ def analyze(repo, cohortfm='%Y', interval=7*24*60*60, ignore=[], only=[], outdir
     with progressbar.ProgressBar(max_value=progressbar.UnknownLength, widget_kwargs=widget_kwargs) as bar:
         for i, commit in enumerate(repo.iter_commits(branch)):
             bar.update(i)
-            cohort = datetime.datetime.utcfromtimestamp(commit.committed_date).strftime(cohortfm)
+            # HACK: get cohort like 2018-Q1, ignore cohortfm setting
+            timestamp = pandas.Timestamp(datetime.datetime.utcfromtimestamp(commit.committed_date))
+            cohort = "{}-Q{}".format(timestamp.year, timestamp.quarter)
             commit2cohort[commit.hexsha] = cohort
             curves_set.add(('cohort', cohort))
             curves_set.add(('author', commit.author.name))
