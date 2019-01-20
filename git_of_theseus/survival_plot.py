@@ -21,7 +21,7 @@ import sys, dateutil.parser, numpy, json, collections, math, scipy.optimize, arg
 
 from matplotlib import pyplot
 
-def survival_plot(input_fns, exp_fit=False, display=False, outfile='survival_plot', years=5):
+def survival_plot(input_fns, exp_fit=False, display=False, outfile='survival_plot', years=5, title=None):
     all_deltas = []
     YEAR = 365.25 * 24 * 60 * 60
     pyplot.figure(figsize=(13, 8))
@@ -93,7 +93,10 @@ def survival_plot(input_fns, exp_fit=False, display=False, outfile='survival_plo
     pyplot.ylabel('%')
     pyplot.xlim([0, years])
     pyplot.ylim([0, 100])
-    pyplot.title('% of lines still present in code after n years')
+    plot_title = '% of lines still present in code after n years'
+    if title:
+        plot_title = title + ': ' + plot_title
+    pyplot.title(plot_title)
     pyplot.legend()
     pyplot.tight_layout()
     pyplot.savefig(outfile)
@@ -107,6 +110,7 @@ def survival_plot_cmdline():
     parser.add_argument('--display', action='store_true', help='Display plot')
     parser.add_argument('--outfile', default='survival_plot.png', type=str, help='Output file to store results (default: %(default)s)')
     parser.add_argument('--years', type=float, default=5, help='Number of years on x axis (default: %(default)s)')
+    parser.add_argument('--title', type=str, help='Optional title prefix for the plot')
     parser.add_argument('input_fns', nargs='*')
     kwargs = vars(parser.parse_args())
 

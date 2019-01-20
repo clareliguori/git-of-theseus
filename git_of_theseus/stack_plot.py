@@ -32,7 +32,7 @@ def generate_n_colors(n):
     return colors
 
 
-def stack_plot(input_fn, display=False, outfile='stack_plot.png', max_n=20, normalize=False, dont_stack=False):
+def stack_plot(input_fn, display=False, outfile='stack_plot.png', max_n=20, normalize=False, dont_stack=False, title=None):
     data = json.load(open(input_fn))  # TODO do we support multiple arguments here?
     y = numpy.array(data['y'])
     if y.shape[0] > max_n:
@@ -47,6 +47,8 @@ def stack_plot(input_fn, display=False, outfile='stack_plot.png', max_n=20, norm
         y = 100. * numpy.array(y) / numpy.sum(y, axis=0)
     pyplot.figure(figsize=(13, 8))
     pyplot.style.use('ggplot')
+    if title:
+        pyplot.title(title)
     ts = [dateutil.parser.parse(t) for t in data['ts']]
     colors = generate_n_colors(len(labels))
     if dont_stack:
@@ -74,6 +76,7 @@ def stack_plot_cmdline():
     parser.add_argument('--max-n', default=20, type=int, help='Max number of dataseries (will roll everything else into "other") (default: %(default)s)')
     parser.add_argument('--normalize', action='store_true', help='Normalize the plot to 100%%')
     parser.add_argument('--dont-stack', action='store_true', help='Don\'t stack plot')
+    parser.add_argument('--title', type=str, help='Optional title for the plot')
     parser.add_argument('input_fn')
     kwargs = vars(parser.parse_args())
 
