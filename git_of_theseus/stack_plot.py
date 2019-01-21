@@ -61,14 +61,14 @@ def stack_plot(input_fn, display=False, outfile='stack_plot.png', max_n=20, norm
     pyplot.axvline('2016-01-01', linewidth=1, color='r', linestyle='dashed', label='Pivot 1 (Q1 2016)')
     pyplot.axvline('2016-07-01', linewidth=1, color='r', linestyle='dashed', label='Pivot 2 (Q3 2016)')
     pyplot.axvline('2016-12-01', linewidth=1, color='r', linestyle='dashed', label='Launch (re:Invent 2016)')
-    pyplot.legend(loc=2)
+    legend = pyplot.legend(loc=2, bbox_to_anchor=(1, 1))
     if normalize:
         pyplot.ylabel('Share of lines of code (%)')
         pyplot.ylim([0, 100])
     else:
         pyplot.ylabel('Lines of code')
     print('Writing output to %s' % outfile)
-    pyplot.savefig(outfile)
+    pyplot.savefig(outfile, bbox_extra_artists=(legend,), bbox_inches='tight')
     pyplot.tight_layout()
     if display:
         pyplot.show()
