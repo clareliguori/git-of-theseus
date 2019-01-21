@@ -57,10 +57,10 @@ def stack_plot(input_fn, display=False, outfile='stack_plot.png', max_n=20, norm
     else:
         pyplot.stackplot(ts, numpy.array(y), labels=labels, colors=colors)
     # HACK: hardcoded vertical lines
-    pyplot.axvline('2015-04-01', linewidth=1, color='r', linestyle='dashed', label='Start (Q2 2015)')
-    pyplot.axvline('2016-01-01', linewidth=1, color='r', linestyle='dashed', label='Pivot 1 (Q1 2016)')
-    pyplot.axvline('2016-07-01', linewidth=1, color='r', linestyle='dashed', label='Pivot 2 (Q3 2016)')
-    pyplot.axvline('2016-12-01', linewidth=1, color='r', linestyle='dashed', label='Launch (re:Invent 2016)')
+    pyplot.axvline('2015-04-01', linewidth=1.5, color='black', linestyle='dashed', label='Start (Q2 2015)')
+    pyplot.axvline('2016-01-01', linewidth=1.5, color='black', linestyle='dashed', label='Pivot 1 (Q1 2016)')
+    pyplot.axvline('2016-07-01', linewidth=1.5, color='black', linestyle='dashed', label='Pivot 2 (Q3 2016)')
+    pyplot.axvline('2016-12-01', linewidth=1.5, color='black', linestyle='dashed', label='Launch (re:Invent 2016)')
     legend = pyplot.legend(loc=2, bbox_to_anchor=(1, 1))
     if normalize:
         pyplot.ylabel('Share of lines of code (%)')
