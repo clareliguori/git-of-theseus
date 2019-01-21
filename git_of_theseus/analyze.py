@@ -57,7 +57,10 @@ def analyze(repo, cohortfm='%Y', interval=7*24*60*60, ignore=[], only=[], outdir
             bar.update(i)
             # HACK: get cohort like 2018-Q1, ignore cohortfm setting
             timestamp = pandas.Timestamp(datetime.datetime.utcfromtimestamp(commit.committed_date))
-            cohort = "{}-Q{}".format(timestamp.year, timestamp.quarter)
+            half = 1
+            if timestamp.quarter >= 3:
+                half = 2
+            cohort = "{}-{}H".format(timestamp.year, half)
             commit2cohort[commit.hexsha] = cohort
             curves_set.add(('cohort', cohort))
             curves_set.add(('author', commit.author.name))
